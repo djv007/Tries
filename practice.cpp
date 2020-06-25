@@ -79,6 +79,25 @@ class Tries
 			}
 		}
 
+
+		bool searchPattern(TrieNode* root , string word)
+		{
+			if(word.length() == 0)
+			{
+				return true;
+			}
+
+			int index = word[0] - 'a';
+			if(root->children[index] == NULL)
+				return false;
+			else
+			{
+				TrieNode *child = root->children[index];
+			
+			return searchPattern(child , word.substr(1));
+			}
+		}
+
 		void remove(TrieNode* root , string word)
 		{
 			if(word.length() == 0)
@@ -114,6 +133,14 @@ class Tries
 
 		}
 
+		
+        
+        
+        
+        
+
+	
+
 
 	public:
 		void insert(string word)
@@ -125,10 +152,34 @@ class Tries
 		{
 			return search(root , word);
 		}
+
+		bool searchPattern(string word)
+		{
+			return searchPattern(root , word);
+		}
+		
+
 		void remove(string word)
 		{
 			remove(root , word);
 		}
+		
+
+		bool patternMatching(vector<string> vect, string pattern) {
+		
+    
+        for(int i=0;i<vect.size();i++)
+        {
+            while(vect[i].size()!=0)
+            {
+                insert(vect[i]); 
+            vect[i] = vect[i].substr(1);
+            }
+            
+        }
+        bool ans = searchPattern(pattern);
+        return ans;
+    }
 };
 
 
@@ -150,7 +201,16 @@ int main()
 	t.remove("racket");
 
 	cout<<t.search("racket")<<endl;
+	vector<string>v;
+	v.push_back ("abc");
+	v.push_back ("def");
+	v.push_back ("ghi");
+	v.push_back ("cba");
+	
+	
 
+	string pattern = "de";
+	cout<<t.patternMatching(v , pattern)<<endl;
 	
 	return 0;
 }
